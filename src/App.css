@@ -1,0 +1,107 @@
+body {
+  padding: 0 !important;
+  max-width: 100%;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 1.5em;
+}
+button {
+  border: 1px solid var(--border);
+}
+a:visited {
+  color: #526980 !important;
+}
+.menu {
+  margin: 0;
+  padding: 0.5rem 1rem;
+}
+.close-button {
+  position: absolute;
+  left: 9px;
+  top: 7px;
+  padding: 4px 10px;
+  display: flex;
+}
+
+.badge {
+  background: black;
+  color: white;
+  border: 1px solid;
+  border-radius: 2px;
+  margin-right: 5px;
+  padding: 0 4px;
+}
+
+.item {
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+.comment-count {
+  font-size: 0.75rem;
+  color: gray;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.comment {
+  margin-bottom: 20px;
+}
+
+.comment-child {
+  border-left: 1px solid var(--border);
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
+.comment h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+[data-reach-dialog-content] {
+  width: inherit !important;
+  margin: 0 !important;
+  padding: 0.5rem !important;
+  max-width: 100vw;
+  background: var(--background-body) !important;
+}
+
+.article-wrap {
+  padding-top: 20px;
+}
+
+.article {
+  background: var(--background) !important;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0.5rem;
+  overflow: auto;
+}
+
+.article q {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.article-buttons {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+  position: sticky;
+  bottom: 30px;
+}
+
+.article-buttons button {
+  margin: 0 0.5rem;
+}
+.replied-to {
+  font-size: 0.7em;
+  font-weight: 400;
+}
