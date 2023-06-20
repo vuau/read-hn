@@ -56,17 +56,23 @@ function ListItem({
   if (data && (data.type === "story" || data.type === "job")) {
     return (
       <div ref={ref} style={combinedStyle} className="item">
-        {data.type === "job" && (
-          <span className="badge">
-            Job
-          </span>
+        {data.type === "job" ? (
+          <>
+            <span className="badge">
+              Job
+            </span>
+            <Link to={data.url} target="_blank">
+              {data.title}
+            </Link>
+          </>
+        ) : (
+          <Link to={`/posts/${id}`}>
+            {data.title}
+            <span className="comment-count">
+              {data?.descendants || 0} comments
+            </span>
+          </Link>
         )}
-        <Link to={`/posts/${id}`}>
-          {data.title}
-          <span className="comment-count">
-            {data?.descendants || 0} comments
-          </span>
-        </Link>
         {idInParam === String(id) && (
           <Dialog isOpen onDismiss={close}>
             <button className="close-button" onClick={close}>
