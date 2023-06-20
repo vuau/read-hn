@@ -58,9 +58,6 @@ function ListItem({
       <div ref={ref} style={combinedStyle} className="item">
         {data.type === "job" ? (
           <>
-            <span className="badge">
-              Job
-            </span>
             <Link to={data.url} target="_blank">
               {data.title}
             </Link>
