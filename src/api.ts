@@ -31,14 +31,14 @@ export type TItemDetailComment = {
 } & TItemDetailBase
 
 export type TItemDetail = TItemDetailStory | TItemDetailJob | TItemDetailComment
-
-export const getTopStories = async (): Promise<number[]> => {
+export type Tag = "top" | "new" | "best" | "ask" | "show";
+export const getStories = async (tag: Tag = "top"): Promise<number[]> => {
   try {
-    const response = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty");
+    const response = await fetch(`https://hacker-news.firebaseio.com/v0/${tag}stories.json?print=pretty`);
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.log('getTopStories', error);
+    console.log('getStories', error);
     throw error;
   }
 }

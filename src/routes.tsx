@@ -15,7 +15,11 @@ export const router = createBrowserRouter([
         element: <List />
       },
       {
-        path: "posts/:id",
+        path: "posts/:tag",
+        element: <List />
+      },
+      {
+        path: "posts/:tag/:id",
         element: <List />
       }
     ]

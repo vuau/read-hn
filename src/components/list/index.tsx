@@ -1,8 +1,9 @@
 import { CSSProperties, useRef } from "react";
 import { VariableSizeList } from "react-window";
 import { useQuery } from "@tanstack/react-query";
-import { getTopStories } from "../../api";
+import { Tag, getStories } from "../../api";
 import Item from "../item";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 
 const rowHeights: {
   [index: number]: number
@@ -18,9 +19,14 @@ function getItemSize(index: number): number {
 
 function List() {
   const listRef = useRef<VariableSizeList>(null)
+  const navigate = useNavigate();
+  const { tag } = useParams();
+  if (!tag) {
+    navigate("/posts/new");
+  }
   const { data, isLoading } = useQuery({
-    queryKey: ["topStories"],
-    queryFn: getTopStories,
+    queryKey: ["stories", tag],
+    queryFn: () => getStories(tag as Tag),
     refetchOnWindowFocus: false,
   });
 
@@ -37,6 +43,15 @@ function List() {
 
   return (
     <>
+      <header>
+        <nav>
+          <NavLink to="/posts/new">New</NavLink>
+          <NavLink to="/posts/top">Top</NavLink>
+          <NavLink to="/posts/best">Best</NavLink>
+          <NavLink to="/posts/ask">Ask</NavLink>
+          <NavLink to="/posts/show">Show</NavLink>
+        </nav>
+      </header>
       {isLoading && (
         <div
           style={{
@@ -52,7 +67,7 @@ function List() {
         <VariableSizeList
           ref={listRef}
           itemCount={data.length}
-          height={window.innerHeight}
+          height={window.innerHeight - 40}
           width="100%"
           itemSize={getItemSize}
         >

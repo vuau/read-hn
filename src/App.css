@@ -1,3 +1,18 @@
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem 1rem;
+  background: var(--background);
+}
+
+nav a {
+  margin-right: 1em;
+  padding: 0 0.5em;
+}
+
+nav a.active {
+  border-top: 5px solid var(--border);
+}
+
 body {
   padding: 0 !important;
   max-width: 100%;

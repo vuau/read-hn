@@ -23,12 +23,12 @@ function ListItem({
   setItemSize,
   listRef,
 }: TListProps) {
-  const { id: idInParam } = useParams();
+  const { id: idInParam, tag = "top" } = useParams();
   const navigate = useNavigate();
 
   const close = useCallback(() => {
-    navigate('/');
-  }, [navigate]);
+    navigate(`/posts/${tag}`);
+  }, [navigate, tag]);
 
   const ref = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useQuery({
@@ -63,7 +63,7 @@ function ListItem({
             </Link>
           </>
         ) : (
-          <Link to={`/posts/${id}`}>
+          <Link to={`/posts/${tag}/${id}`}>
             {data.title}
             <span className="comment-count">
               {data?.descendants || 0} comments

@@ -94,7 +94,9 @@ function ItemDetail() {
             )}
           </div>
         </Disclosure>
-        <Pager<number> pageSize={10} data={data.kids} Component={Comment} />
+        {data?.kids?.length > 0 &&
+          <Pager<number> pageSize={10} data={data.kids} Component={Comment} />
+        }
       </div>
     );
   } else {
