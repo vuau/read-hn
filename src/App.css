@@ -116,7 +116,13 @@ a:visited {
 .article-buttons button {
   margin: 0 0.5rem;
 }
+.comment-author {
+  cursor: pointer;
+}
 .replied-to {
   font-size: 0.7em;
+  font-weight: 400;
+}
+.collapse {
   font-weight: 400;
 }
