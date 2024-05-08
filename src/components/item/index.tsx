@@ -23,12 +23,7 @@ function ListItem({
   setItemSize,
   listRef,
 }: TListProps) {
-  const { id: idInParam, tag = "top" } = useParams();
-  const navigate = useNavigate();
-
-  const close = useCallback(() => {
-    navigate(`/posts/${tag}`);
-  }, [navigate, tag]);
+  const { tag = "top" } = useParams();
 
   const ref = useRef<HTMLDivElement>(null);
   const { data, isLoading } = useQuery({
@@ -69,16 +64,6 @@ function ListItem({
               {data?.descendants || 0} comments
             </span>
           </Link>
-        )}
-        {idInParam === String(id) && (
-          <Dialog isOpen onDismiss={close}>
-            <button className="close-button" onClick={close}>
-              <ArrowLeft />
-              <VisuallyHidden>Back</VisuallyHidden>
-              <span aria-hidden>Back</span>
-            </button>
-            <ItemDetail />
-          </Dialog>
         )}
       </div>
     );

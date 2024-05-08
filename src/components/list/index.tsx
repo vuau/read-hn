@@ -1,12 +1,16 @@
-import { CSSProperties, useRef } from "react";
+import { CSSProperties, useCallback, useRef } from "react";
 import { VariableSizeList } from "react-window";
 import { useQuery } from "@tanstack/react-query";
 import { Tag, getStories } from "../../api";
 import Item from "../item";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { Dialog } from "@reach/dialog";
+import { VisuallyHidden } from "@reach/visually-hidden";
+import ItemDetail from "../item-detail";
+import { ArrowLeft } from "lucide-react";
 
 const rowHeights: {
-  [index: number]: number
+  [index: number]: number;
 } = {};
 
 function setItemSize(index: number, height: number): void {
@@ -18,9 +22,9 @@ function getItemSize(index: number): number {
 }
 
 function List() {
-  const listRef = useRef<VariableSizeList>(null)
+  const listRef = useRef<VariableSizeList>(null);
   const navigate = useNavigate();
-  const { tag } = useParams();
+  const { id, tag } = useParams();
   if (!tag) {
     navigate("/posts/new");
   }
@@ -38,8 +42,20 @@ function List() {
     index: number;
   }) {
     if (!data) return null;
-    return <Item style={style} id={data[index]} index={index} setItemSize={setItemSize} listRef={listRef} />;
+    return (
+      <Item
+        style={style}
+        id={data[index]}
+        index={index}
+        setItemSize={setItemSize}
+        listRef={listRef}
+      />
+    );
   }
+
+  const close = useCallback(() => {
+    navigate(`/posts/${tag}`);
+  }, [navigate, tag]);
 
   return (
     <>
@@ -73,6 +89,16 @@ function List() {
         >
           {ItemRenderer}
         </VariableSizeList>
+      )}
+      {id && (
+        <Dialog isOpen onDismiss={close}>
+          <button className="close-button" onClick={close}>
+            <ArrowLeft />
+            <VisuallyHidden>Back</VisuallyHidden>
+            <span aria-hidden>Back</span>
+          </button>
+          <ItemDetail />
+        </Dialog>
       )}
     </>
   );
