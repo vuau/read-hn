@@ -1,4 +1,4 @@
-import { CSSProperties, useRef } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import { VariableSizeList } from "react-window";
 import { useQuery } from "@tanstack/react-query";
 import { Tag, getStories } from "../../api";
@@ -40,6 +40,15 @@ function List() {
     if (!data) return null;
     return <Item style={style} id={data[index]} index={index} setItemSize={setItemSize} listRef={listRef} />;
   }
+
+  useEffect(() => {
+    document.addEventListener('mouseover', (event: MouseEvent) => {
+      let target = event.target as HTMLElement;
+      if (target.tagName === "SPAN" && target.classList.contains('lookup')) {
+        console.log(target.textContent);
+      }
+    });
+  }, []);
 
   return (
     <>
