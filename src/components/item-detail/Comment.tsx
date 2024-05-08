@@ -37,6 +37,7 @@ function Comment({ data: id }: TCommentProps) {
           <DisclosurePanel>
             <div
               dangerouslySetInnerHTML={{ __html: data.text }}
+              onDoubleClick={() => setOpen(!open)}
             />
             {data &&
               data.type === "comment" &&
