@@ -1,12 +1,8 @@
-import { CSSProperties, useCallback, useEffect, useRef } from "react";
+import { CSSProperties, useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { VariableSizeList } from "react-window";
 import { getItemDetail } from "../../api";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Dialog } from "@reach/dialog";
-import { VisuallyHidden } from "@reach/visually-hidden";
-import ItemDetail from "../item-detail";
-import { ArrowLeft } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
 
 type TListProps = {
   id: number;
