@@ -35,7 +35,11 @@ function ItemDetail() {
     opacity: data?.type === "job" ? 0.5 : 1,
   };
 
-  const { data: articleData } = useQuery({
+  const {
+    data: articleData,
+    isError,
+    isLoading: isLoadingArticle,
+  } = useQuery({
     queryKey: ["itemDetailArticle", id],
     queryFn: () => getPageInReaderView((data as TItemDetailStory).url),
     enabled: Boolean(data),
@@ -63,40 +67,44 @@ function ItemDetail() {
             {data?.title} <ArrowUpRightSquare />
           </a>
         </h1>
-        <Disclosure open={openArticle}>
-          <DisclosurePanel>
-            <div
-              className="article"
-              style={{
-                height: showFullHeight ? "auto" : `${initialHeight}px`,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: articleData || "Loading article...",
-              }}
-            />
-          </DisclosurePanel>
-          <div className="article-buttons">
-            {openArticle ? (
-              <>
-                {!showFullHeight && (
-                  <DisclosureButton onClick={() => setShowFullHeight(true)}>
-                    Full height
+        {isError && <div>Error Loading Article</div>}
+        {isLoadingArticle && <div>Loading Article</div>}
+        {articleData && (
+          <Disclosure open={openArticle}>
+            <DisclosurePanel>
+              <div
+                className="article"
+                style={{
+                  height: showFullHeight ? "auto" : `${initialHeight}px`,
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: articleData,
+                }}
+              />
+            </DisclosurePanel>
+            <div className="article-buttons">
+              {openArticle ? (
+                <>
+                  {!showFullHeight && (
+                    <DisclosureButton onClick={() => setShowFullHeight(true)}>
+                      Expand Article
+                    </DisclosureButton>
+                  )}
+                  <DisclosureButton onClick={hideArticle}>
+                    Hide Article
                   </DisclosureButton>
-                )}
-                <DisclosureButton onClick={hideArticle}>
-                  Hide Article
+                </>
+              ) : (
+                <DisclosureButton onClick={() => setOpenArticle(true)}>
+                  Show Article
                 </DisclosureButton>
-              </>
-            ) : (
-              <DisclosureButton onClick={() => setOpenArticle(true)}>
-                Show Article
-              </DisclosureButton>
-            )}
-          </div>
-        </Disclosure>
-        {data?.kids?.length > 0 &&
+              )}
+            </div>
+          </Disclosure>
+        )}
+        {data?.kids?.length > 0 && (
           <Pager<number> pageSize={10} data={data.kids} Component={Comment} />
-        }
+        )}
       </div>
     );
   } else {
