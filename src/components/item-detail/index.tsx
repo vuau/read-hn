@@ -15,7 +15,7 @@ import {
 import Comment from "./Comment";
 import Pager from "../pager";
 import { useParams } from "react-router-dom";
-import { ArrowUpRightSquare } from "lucide-react";
+import { ArrowUpRightSquare, Loader } from "lucide-react";
 
 function ItemDetail() {
   const { id } = useParams();
@@ -35,10 +35,10 @@ function ItemDetail() {
     opacity: data?.type === "job" ? 0.5 : 1,
   };
 
-  const { data: articleData } = useQuery({
+  const { data: articleData, isInitialLoading } = useQuery({
     queryKey: ["itemDetailArticle", id],
     queryFn: () => getPageInReaderView((data as TItemDetailStory).url),
-    enabled: Boolean(data),
+    enabled: Boolean(data) && Boolean((data as TItemDetailStory).url),
   });
 
   const initialHeight =
@@ -53,50 +53,70 @@ function ItemDetail() {
   }, []);
 
   if (isLoading) {
-    return <div style={combinedStyle}>{isLoading && "Loading..."}</div>;
+    return (
+      <div style={combinedStyle}>
+        {isLoading && (
+          <div className="loader">
+            <Loader />
+          </div>
+        )}
+      </div>
+    );
   }
   if (data && (data.type === "story" || data.type === "job")) {
     return (
       <div className="article-wrap">
         <h1>
-          <a href={data?.url} target="_blank">
-            {data?.title} <ArrowUpRightSquare />
-          </a>
+          {data?.url ? (
+            <a href={data?.url} target="_blank">
+              {data?.title} <ArrowUpRightSquare />
+            </a>
+          ) : (
+            data?.title
+          )}
         </h1>
-        <Disclosure open={openArticle}>
-          <DisclosurePanel>
-            <div
-              className="article"
-              style={{
-                height: showFullHeight ? "auto" : `${initialHeight}px`,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: articleData || "Loading article...",
-              }}
-            />
-          </DisclosurePanel>
-          <div className="article-buttons">
-            {openArticle ? (
-              <>
-                {!showFullHeight && (
-                  <DisclosureButton onClick={() => setShowFullHeight(true)}>
-                    Full height
-                  </DisclosureButton>
-                )}
-                <DisclosureButton onClick={hideArticle}>
-                  Hide Article
-                </DisclosureButton>
-              </>
-            ) : (
-              <DisclosureButton onClick={() => setOpenArticle(true)}>
-                Show Article
-              </DisclosureButton>
-            )}
+        {isInitialLoading && (
+          <div className="loader">
+            Parsing content...
+            <Loader />
           </div>
-        </Disclosure>
-        {data?.kids?.length > 0 &&
+        )}
+        {articleData && (
+          <Disclosure open={openArticle}>
+            <DisclosurePanel>
+              <div
+                className="article"
+                style={{
+                  height: showFullHeight ? "auto" : `${initialHeight}px`,
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: articleData,
+                }}
+              />
+            </DisclosurePanel>
+            <div className="article-buttons">
+              {openArticle ? (
+                <>
+                  {!showFullHeight && (
+                    <DisclosureButton onClick={() => setShowFullHeight(true)}>
+                      Expand
+                    </DisclosureButton>
+                  )}
+                  <DisclosureButton onClick={hideArticle}>
+                    Hide
+                  </DisclosureButton>
+                </>
+              ) : (
+                <DisclosureButton onClick={() => setOpenArticle(true)}>
+                  Show
+                </DisclosureButton>
+              )}
+            </div>
+          </Disclosure>
+        )}
+        {data?.kids?.length > 0 && (
           <Pager<number> pageSize={10} data={data.kids} Component={Comment} />
-        }
+        )}
       </div>
     );
   } else {

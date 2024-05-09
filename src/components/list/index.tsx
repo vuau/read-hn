@@ -7,7 +7,7 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Dialog } from "@reach/dialog";
 import { VisuallyHidden } from "@reach/visually-hidden";
 import ItemDetail from "../item-detail";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader } from "lucide-react";
 
 const rowHeights: {
   [index: number]: number;
@@ -70,13 +70,12 @@ function List() {
       </header>
       {isLoading && (
         <div
+          className="loader"
           style={{
-            display: "flex",
-            alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <span>Loading...</span>
+          <Loader />
         </div>
       )}
       {data && (
