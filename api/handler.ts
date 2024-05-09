@@ -12,19 +12,18 @@ export default function handler(
       const doc = new JSDOM(r.body, { url: request.query.url as string });
       const reader = new Readability(doc.window.document);
       const article = reader.parse();
-      console.log(article);
       response.setHeader('Content-Type', 'text/html');
       response.status(200).send(article?.content);
     }).catch(err => {
-      console.log(err);
-      response.status(200).json({
+      response.status(400).json({
         body: request.body,
         query: request.query,
         cookies: request.cookies,
+        error: err.message,
       });
     });
   } else {
-    response.status(200).json({
+    response.status(404).json({
       body: request.body,
       query: request.query,
       cookies: request.cookies,

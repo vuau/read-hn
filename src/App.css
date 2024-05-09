@@ -37,6 +37,8 @@ a:visited {
   top: 7px;
   padding: 4px 10px;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .badge {
@@ -126,4 +128,23 @@ a:visited {
 .collapse {
   font-size: 0.7em;
   font-weight: 300;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  > svg {
+    animation: spin-animation 0.5s infinite;
+    display: inline-block;
+  }
+}
+
+@keyframes spin-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }

@@ -56,7 +56,7 @@ export const getItemDetail = async (id: number): Promise<TItemDetail> => {
 
 export const getPageInReaderView = async (url: string): Promise<string> => {
   try {
-    const response = await fetch(`/_api/handler?url=${url}`);
+    const response = await fetch(`/api/handler?url=${url}`);
     console.log({ response });
     if (response.status !== 200) {
       throw new Error(`Failed to fetch ${url}`);

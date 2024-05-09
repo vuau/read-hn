@@ -15,7 +15,7 @@ import {
 import Comment from "./Comment";
 import Pager from "../pager";
 import { useParams } from "react-router-dom";
-import { ArrowUpRightSquare } from "lucide-react";
+import { ArrowUpRightSquare, Loader } from "lucide-react";
 
 function ItemDetail() {
   const { id } = useParams();
@@ -35,14 +35,10 @@ function ItemDetail() {
     opacity: data?.type === "job" ? 0.5 : 1,
   };
 
-  const {
-    data: articleData,
-    isError,
-    isLoading: isLoadingArticle,
-  } = useQuery({
+  const { data: articleData, isInitialLoading } = useQuery({
     queryKey: ["itemDetailArticle", id],
     queryFn: () => getPageInReaderView((data as TItemDetailStory).url),
-    enabled: Boolean(data),
+    enabled: Boolean(data) && Boolean((data as TItemDetailStory).url),
   });
 
   const initialHeight =
@@ -57,18 +53,34 @@ function ItemDetail() {
   }, []);
 
   if (isLoading) {
-    return <div style={combinedStyle}>{isLoading && "Loading..."}</div>;
+    return (
+      <div style={combinedStyle}>
+        {isLoading && (
+          <div className="loader">
+            <Loader />
+          </div>
+        )}
+      </div>
+    );
   }
   if (data && (data.type === "story" || data.type === "job")) {
     return (
       <div className="article-wrap">
         <h1>
-          <a href={data?.url} target="_blank">
-            {data?.title} <ArrowUpRightSquare />
-          </a>
+          {data?.url ? (
+            <a href={data?.url} target="_blank">
+              {data?.title} <ArrowUpRightSquare />
+            </a>
+          ) : (
+            data?.title
+          )}
         </h1>
-        {isError && <div>Error Loading Article</div>}
-        {isLoadingArticle && <div>Loading Article</div>}
+        {isInitialLoading && (
+          <div className="loader">
+            Parsing content...
+            <Loader />
+          </div>
+        )}
         {articleData && (
           <Disclosure open={openArticle}>
             <DisclosurePanel>
@@ -87,16 +99,16 @@ function ItemDetail() {
                 <>
                   {!showFullHeight && (
                     <DisclosureButton onClick={() => setShowFullHeight(true)}>
-                      Expand Article
+                      Expand
                     </DisclosureButton>
                   )}
                   <DisclosureButton onClick={hideArticle}>
-                    Hide Article
+                    Hide
                   </DisclosureButton>
                 </>
               ) : (
                 <DisclosureButton onClick={() => setOpenArticle(true)}>
-                  Show Article
+                  Show
                 </DisclosureButton>
               )}
             </div>
