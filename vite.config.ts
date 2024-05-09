@@ -17,10 +17,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        id: '/index.html',
+        id: '/',
         display: 'standalone',
-        scope: '/index.html',
-        start_url: '/index.html',
+        scope: '/',
+        start_url: '/',
         name: 'Au read',
         short_name: 'Au read',
         description: 'a reader app by Au',
@@ -43,14 +43,14 @@ export default defineConfig({
             "sizes": "461x821",
             "type": "image/png",
             "form_factor": "narrow",
-            "label": "Au write"
+            "label": "Au read"
           },
           {
             "src": "images/screenshot.png",
             "sizes": "805x547",
             "type": "image/png",
             "form_factor": "wide",
-            "label": "Au write"
+            "label": "Au read"
           }
         ]
       },
