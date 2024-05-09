@@ -58,9 +58,11 @@ export const getPageInReaderView = async (url: string): Promise<string> => {
   try {
     const response = await fetch(`/_api/handler?url=${url}`);
     console.log({ response });
+    if (response.status !== 200) {
+      throw new Error(`Failed to fetch ${url}`);
+    }
     return await response.text();
   } catch (error) {
-    console.log('getPageInReaderView', error);
     throw error;
   }
 }
