@@ -42,7 +42,16 @@ function ListItem({
   }, [data, index, setItemSize, listRef]);
 
   if (isLoading) {
-    return <div className="item" style={combinedStyle}>{isLoading && "Loading..."}</div>;
+    return (
+      <div className="item" style={combinedStyle}>
+        {isLoading && (
+          <div
+            style={{ width: `${Math.random() * 50}%` }}
+            className="loading-placeholder"
+          />
+        )}
+      </div>
+    );
   }
   if (data && (data.type === "story" || data.type === "job")) {
     return (

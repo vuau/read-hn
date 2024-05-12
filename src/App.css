@@ -148,3 +148,25 @@ a:visited {
     transform: rotate(359deg);
   }
 }
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}
+
+.loading-placeholder {
+    animation-duration: 1.25s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: var(--background-body);
+    background: linear-gradient(to right, var(--background-body) 10%, var(--background) 18%, var(--background-alt) 33%);
+    background-size: 800px 104px;
+    height: 6px;
+    position: relative;
+}
