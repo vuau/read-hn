@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useRef } from "react";
+import { CSSProperties, useCallback, useRef, useContext } from "react";
 import { VariableSizeList } from "react-window";
 import { useQuery } from "@tanstack/react-query";
 import { Tag, getStories } from "../../api";
@@ -7,7 +7,8 @@ import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { Dialog } from "@reach/dialog";
 import { VisuallyHidden } from "@reach/visually-hidden";
 import ItemDetail from "../item-detail";
-import { ArrowLeft, Loader } from "lucide-react";
+import { ArrowLeft, Loader, Star, StarOff } from "lucide-react";
+import { BookmarksContext } from "../../App";
 
 const rowHeights: {
   [index: number]: number;
@@ -23,6 +24,7 @@ function getItemSize(index: number): number {
 
 function List() {
   const listRef = useRef<VariableSizeList>(null);
+  const { bookmarks, setBookmarks } = useContext(BookmarksContext);
   const navigate = useNavigate();
   const { id, tag } = useParams();
   if (!tag) {
@@ -30,7 +32,11 @@ function List() {
   }
   const { data, isLoading } = useQuery({
     queryKey: ["stories", tag],
-    queryFn: () => getStories(tag as Tag),
+    queryFn: () => {
+      if (!tag) return [];
+      if (tag === "bookmarked") return Promise.resolve(bookmarks);
+      return getStories(tag as Tag);
+    },
     refetchOnWindowFocus: false,
   });
 
@@ -57,6 +63,16 @@ function List() {
     navigate(`/posts/${tag}`);
   }, [navigate, tag]);
 
+  const bookmark = useCallback(() => {
+    if (!id) return;
+    setBookmarks((prev) => {
+      if (prev.includes(+id)) {
+        return prev.filter((i) => i !== +id);
+      }
+      return [...prev, +id];
+    });
+  }, [id, setBookmarks]);
+
   return (
     <>
       <header>
@@ -66,6 +82,7 @@ function List() {
           <NavLink to="/posts/best">Best</NavLink>
           <NavLink to="/posts/ask">Ask</NavLink>
           <NavLink to="/posts/show">Show</NavLink>
+          <NavLink to="/posts/bookmarked">Bookmarked</NavLink>
         </nav>
       </header>
       {isLoading && (
@@ -91,11 +108,16 @@ function List() {
       )}
       {id && (
         <Dialog isOpen onDismiss={close}>
-          <button className="close-button" onClick={close}>
-            <ArrowLeft />
-            <VisuallyHidden>Back</VisuallyHidden>
-            <span aria-hidden>Back</span>
-          </button>
+          <div className="dialog-header">
+            <button className="header-button" onClick={close}>
+              <ArrowLeft />
+              <span>Back</span>
+            </button>
+            <button className="header-button" onClick={bookmark}>
+              {bookmarks.includes(+id) ? <StarOff /> : <Star />}
+              <VisuallyHidden>Bookmark this page</VisuallyHidden>
+            </button>
+          </div>
           <ItemDetail />
         </Dialog>
       )}

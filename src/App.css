@@ -31,12 +31,16 @@ a:visited {
   margin: 0;
   padding: 0.5rem 1rem;
 }
-.close-button {
-  position: absolute;
-  left: 9px;
-  top: 7px;
-  padding: 4px 10px;
+
+.dialog-header {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.header-button {
+  padding: 4px 10px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 }
@@ -170,3 +174,4 @@ a:visited {
     height: 6px;
     position: relative;
 }
+
