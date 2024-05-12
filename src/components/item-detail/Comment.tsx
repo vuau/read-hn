@@ -27,7 +27,12 @@ function Comment({ data: id }: TCommentProps) {
 
   return (
     <div className="comment">
-      {isLoading && <div>Loading comment...</div>}
+      {isLoading && (
+          <div
+            style={{ width: `${Math.random() * 50}%` }}
+            className="loading-placeholder"
+          />
+      )}
       {data && data.type === "comment" && !data.deleted && (
         <Disclosure open={open} onChange={() => setOpen(!open)}>
           <DisclosureButton as="h3" className="comment-author">
