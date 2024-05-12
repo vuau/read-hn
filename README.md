@@ -6,6 +6,7 @@ Using the HackerNews API available at https://github.com/HackerNews/API to build
 - Clean UI with dark mode support
 - Read shared links in reader view mode without opening a new tab
 - Double tab to collapse comments
+- Bookmarks
 
 <table>
   <tr>
