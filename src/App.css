@@ -4,6 +4,11 @@ header {
   background: var(--background);
 }
 
+nav {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 2px 0;
+}
 nav a {
   margin-right: 1em;
   padding: 0 0.5em;
