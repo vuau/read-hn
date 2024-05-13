@@ -1,20 +1,23 @@
 import { CSSProperties, useEffect, useRef } from "react";
 import { VariableSizeList } from "react-window";
-import { TItemDetailStory } from "../../api";
 import { Link, useParams } from "react-router-dom";
 
+interface RSSItem {
+  title: string;
+  url: string;
+  id: string;
+}
+
 type TListProps = {
-  id: number;
   index: number;
   style: CSSProperties;
   setItemSize: (index: number, height: number) => void;
   listRef: React.RefObject<VariableSizeList>;
-  data: TItemDetailStory;
+  data: RSSItem;
 };
 
 function ListItem({
   style: itemStyle,
-  id,
   index,
   setItemSize,
   listRef,
@@ -40,7 +43,7 @@ function ListItem({
   if (data) {
     return (
       <div ref={ref} style={combinedStyle} className="item">
-          <Link to={`/news/${tag}?url=${id}`}>
+          <Link to={`/news/${tag}?url=${data.url}`}>
             {data.title}
           </Link>
       </div>

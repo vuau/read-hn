@@ -5,7 +5,6 @@ import { NavLink, useNavigate, useParams, useSearchParams } from "react-router-d
 import { Loader } from "lucide-react";
 import { BookmarksContext } from "../../AppNews";
 import Item from "../item-news";
-import { TItemDetailStory } from "api";
 import { Dialog } from "@reach/dialog";
 import ItemDetailNews from "../item-detail-news";
 import { ArrowLeft } from "lucide-react";
@@ -90,11 +89,10 @@ function List() {
     return (
       <Item
         style={style}
-        id={data[index].id}
         index={index}
         setItemSize={setItemSize}
         listRef={listRef}
-        data={data[index] as TItemDetailStory}
+        data={data[index] as RSSItem}
       />
     );
   }
