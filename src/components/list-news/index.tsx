@@ -18,7 +18,7 @@ interface RSSItem {
 
 async function parseRSS(site: string, url: string): Promise<RSSItem[]> {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { mode: "no-cors" });
     const xml = await response.text();
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xml, 'text/xml');
