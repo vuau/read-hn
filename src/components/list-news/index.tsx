@@ -52,61 +52,7 @@ function getItemSize(index: number): number {
   return rowHeights[index] || 30;
 }
 
-const feeds: Record<string, Array<[string, string]>>  = import.meta.env.MODE === "development" ? {
-  "trang-chu": [
-    ["vnexpress", "https://vnexpress.net/rss/tin-moi-nhat.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/tin-moi-nhat.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/home.rss"],
-  ],
-  "thoi-su": [
-    ["vnexpress", "https://vnexpress.net/rss/thoi-su.rss"], 
-    ["tuoitre", "https://tuoitre.vn/rss/thoi-su.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/thoi-su.rss"], 
-  ],
-  "the-gioi": [
-    ["vnexpress", "https://vnexpress.net/rss/the-gioi.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/the-gioi.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/the-gioi.rss"],
-  ],
-  "kinh-te": [
-    ["vnexpress", "https://vnexpress.net/rss/kinh-doanh.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/kinh-doanh.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/kinh-te.rss"],
-  ],
-  "giao-duc": [
-    ["vnexpress", "https://vnexpress.net/rss/giao-duc.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/giao-duc.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/giao-duc.rss"],
-  ],
-  "giai-tri": [
-    ["vnexpress", "https://vnexpress.net/rss/giai-tri.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/giai-tri.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/giai-tri.rss"],
-  ],
-  "phap-luat": [
-    ["vnexpress", "https://vnexpress.net/rss/phap-luat.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/phap-luat.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/phap-luat.rss"],
-  ],
-  "doi-song": [
-    ["vnexpress", "https://vnexpress.net/rss/doi-song.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/doi-song.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/doi-song.rss"],
-  ],
-  "goc-nhin": [
-    ["vnexpress", "https://vnexpress.net/rss/goc-nhin.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/ban-doc-lam-bao.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/toi-viet.rss"],
-  ],
-  "tam-su": [
-    ["vnexpress", "https://vnexpress.net/rss/tam-su.rss"],
-  ],
-  "cong-nghe": [
-    ["vnexpress", "https://vnexpress.net/rss/so-hoa.rss"],
-    ["tuoitre", "https://tuoitre.vn/rss/nhip-song-so.rss"],
-    ["thanhnien", "https://thanhnien.vn/rss/cong-nghe-game.rss"],
-  ]
-} : {
+const feeds: Record<string, Array<[string, string]>>  = {
   "trang-chu": [
     ["vnexpress", "/vnexpress/rss/tin-moi-nhat.rss"],
     ["tuoitre", "/tuoitre/rss/tin-moi-nhat.rss"],
@@ -160,7 +106,7 @@ const feeds: Record<string, Array<[string, string]>>  = import.meta.env.MODE ===
     ["tuoitre", "/tuoitre/rss/nhip-song-so.rss"],
     ["thanhnien", "/thanhnien/rss/cong-nghe-game.rss"],
   ]
-}
+};
 
 function List() {
   const listRef = useRef<VariableSizeList>(null);
