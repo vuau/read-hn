@@ -1,17 +1,19 @@
 header {
   border-bottom: 1px solid var(--border);
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
   background: var(--background);
 }
 
 nav {
   overflow-x: auto;
   white-space: nowrap;
-  padding: 2px 0;
+  display: flex;
+  align-items: center;
 }
 nav a {
   margin-right: 1em;
-  padding: 0 0.5em;
+  padding: 0.5em;
+  border-top: 5px solid transparent;
 }
 
 nav a.active {

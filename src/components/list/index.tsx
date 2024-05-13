@@ -99,7 +99,7 @@ function List() {
         <VariableSizeList
           ref={listRef}
           itemCount={data.length}
-          height={window.innerHeight - 40}
+          height={window.innerHeight - 60}
           width="100%"
           itemSize={getItemSize}
         >
