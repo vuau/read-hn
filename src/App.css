@@ -110,6 +110,10 @@ a:visited {
   overflow: auto;
 }
 
+.article .page ul {
+  display: none;
+}
+
 .article img,
 .article figcaption {
   max-width: 100%;
