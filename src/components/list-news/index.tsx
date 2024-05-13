@@ -52,7 +52,7 @@ function getItemSize(index: number): number {
   return rowHeights[index] || 30;
 }
 
-const feeds: Record<string, Array<[string, string]>>  = import.meta.env.MODE === "production" ? {
+const feeds: Record<string, Array<[string, string]>>  = import.meta.env.MODE === "development" ? {
   "trang-chu": [
     ["vnexpress", "https://vnexpress.net/rss/tin-moi-nhat.rss"],
     ["tuoitre", "https://tuoitre.vn/rss/tin-moi-nhat.rss"],
