@@ -1,5 +1,9 @@
 {
   "rewrites": [
+    {
+      "source": "/vnexpress/:path*",
+      "destination": "https://vnexpress.net/:path*"
+    },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
