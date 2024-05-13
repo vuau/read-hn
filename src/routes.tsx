@@ -1,44 +1,33 @@
 import { createBrowserRouter } from "react-router-dom";
-// import App from "./App";
-// import List from "./components/list";
-import AppNews from "./AppNews";
+import App from "./App";
+import List from "./components/list";
 import ListNews from "./components/list-news";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppNews />,
+    element: <App />,
     children: [
       {
         path: "/",
         element: <ListNews />,
       },
       {
-        path: "news/:tag",
+        path: "doc-bao/:tag",
         element: <ListNews />,
       },
       {
-        path: "news/:tag?url=:url",
+        path: "doc-bao/:tag?url=:url",
         element: <ListNews />,
+      },
+      {
+        path: "posts/:tag",
+        element: <List />,
+      },
+      {
+        path: "posts/:tag/:id",
+        element: <List />,
       },
     ],
   },
-  // {
-  //   path: "/",
-  //   element: <App />,
-  //   children: [
-  //     {
-  //       path: "/",
-  //       element: <List />,
-  //     },
-  //     {
-  //       path: "posts/:tag",
-  //       element: <List />,
-  //     },
-  //     {
-  //       path: "posts/:tag/:id",
-  //       element: <List />,
-  //     },
-  //   ],
-  // },
 ]);

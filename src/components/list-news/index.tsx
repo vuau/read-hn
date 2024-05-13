@@ -13,30 +13,26 @@ interface RSSItem {
   title: string;
   url: string;
   id: string;
+  site: string,
 }
 
-// Function to fetch and parse RSS feed
-async function parseRSS(url: string): Promise<RSSItem[]> {
+async function parseRSS(site: string, url: string): Promise<RSSItem[]> {
   try {
     const response = await fetch(url);
     const xml = await response.text();
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xml, 'text/xml');
-    const items = xmlDoc.querySelectorAll('item'); // Assuming 'item' is the tag for each feed item
+    const items = xmlDoc.querySelectorAll('item');
     
-    // Parse items
     const parsedItems: RSSItem[] = [];
     items.forEach(item => {
       parsedItems.push({
         title: item.querySelector('title')?.textContent || '',
         url: item.querySelector('link')?.textContent || '',
         id: item.querySelector('link')?.textContent || '',
+        site
       });
     });
-
-
-    console.log({ xml, items, parsedItems });
-    
     return parsedItems;
   } catch (error) {
     console.error('Error fetching or parsing RSS:', error);
@@ -56,6 +52,116 @@ function getItemSize(index: number): number {
   return rowHeights[index] || 30;
 }
 
+const feeds: Record<string, Array<[string, string]>>  = import.meta.env.MODE === "production" ? {
+  "trang-chu": [
+    ["vnexpress", "https://vnexpress.net/rss/tin-moi-nhat.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/tin-moi-nhat.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/home.rss"],
+  ],
+  "thoi-su": [
+    ["vnexpress", "https://vnexpress.net/rss/thoi-su.rss"], 
+    ["tuoitre", "https://tuoitre.vn/rss/thoi-su.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/thoi-su.rss"], 
+  ],
+  "the-gioi": [
+    ["vnexpress", "https://vnexpress.net/rss/the-gioi.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/the-gioi.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/the-gioi.rss"],
+  ],
+  "kinh-te": [
+    ["vnexpress", "https://vnexpress.net/rss/kinh-doanh.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/kinh-doanh.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/kinh-te.rss"],
+  ],
+  "giao-duc": [
+    ["vnexpress", "https://vnexpress.net/rss/giao-duc.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/giao-duc.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/giao-duc.rss"],
+  ],
+  "giai-tri": [
+    ["vnexpress", "https://vnexpress.net/rss/giai-tri.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/giai-tri.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/giai-tri.rss"],
+  ],
+  "phap-luat": [
+    ["vnexpress", "https://vnexpress.net/rss/phap-luat.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/phap-luat.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/phap-luat.rss"],
+  ],
+  "doi-song": [
+    ["vnexpress", "https://vnexpress.net/rss/doi-song.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/doi-song.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/doi-song.rss"],
+  ],
+  "goc-nhin": [
+    ["vnexpress", "https://vnexpress.net/rss/goc-nhin.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/ban-doc-lam-bao.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/toi-viet.rss"],
+  ],
+  "tam-su": [
+    ["vnexpress", "https://vnexpress.net/rss/tam-su.rss"],
+  ],
+  "cong-nghe": [
+    ["vnexpress", "https://vnexpress.net/rss/so-hoa.rss"],
+    ["tuoitre", "https://tuoitre.vn/rss/nhip-song-so.rss"],
+    ["thanhnien", "https://thanhnien.vn/rss/cong-nghe-game.rss"],
+  ]
+} : {
+  "trang-chu": [
+    ["vnexpress", "/vnexpress/rss/tin-moi-nhat.rss"],
+    ["tuoitre", "/tuoitre/rss/tin-moi-nhat.rss"],
+    ["thanhnien", "/thanhnien/rss/home.rss"],
+  ],
+  "thoi-su": [
+    ["vnexpress", "/vnexpress/rss/thoi-su.rss"],
+    ["tuoitre", "/tuoitre/rss/thoi-su.rss"],
+    ["thanhnien", "/thanhnien/rss/thoi-su.rss"],
+  ],
+  "the-gioi": [
+    ["vnexpress", "/vnexpress/rss/the-gioi.rss"],
+    ["tuoitre", "/tuoitre/rss/the-gioi.rss"],
+    ["thanhnien", "/thanhnien/rss/the-gioi.rss"],
+  ],
+  "kinh-te": [
+    ["vnexpress", "/vnexpress/rss/kinh-doanh.rss"],
+    ["tuoitre", "/tuoitre/rss/kinh-doanh.rss"],
+    ["thanhnien", "/thanhnien/rss/kinh-te.rss"],
+  ],
+  "giao-duc": [
+    ["vnexpress", "/vnexpress/rss/giao-duc.rss"],
+    ["tuoitre", "/tuoitre/rss/giao-duc.rss"],
+    ["thanhnien", "/thanhnien/rss/giao-duc.rss"],
+  ],
+  "giai-tri": [
+    ["vnexpress", "/vnexpress/rss/giai-tri.rss"],
+    ["tuoitre", "/tuoitre/rss/giai-tri.rss"],
+    ["thanhnien", "/thanhnien/rss/giai-tri.rss"],
+  ],
+  "phap-luat": [
+    ["vnexpress", "/vnexpress/rss/phap-luat.rss"],
+    ["tuoitre", "/tuoitre/rss/phap-luat.rss"],
+    ["thanhnien", "/thanhnien/rss/phap-luat.rss"],
+  ],
+  "doi-song": [
+    ["vnexpress", "/vnexpress/rss/doi-song.rss"],
+    ["tuoitre", "/tuoitre/rss/doi-song.rss"],
+    ["thanhnien", "/thanhnien/rss/doi-song.rss"],
+  ],
+  "goc-nhin": [
+    ["vnexpress", "/vnexpress/rss/goc-nhin.rss"],
+    ["tuoitre", "/tuoitre/rss/ban-doc-lam-bao.rss"],
+    ["thanhnien", "/thanhnien/rss/toi-viet.rss"],
+  ],
+  "tam-su": [
+    ["vnexpress", "/vnexpress/rss/tam-su.rss"],
+  ],
+  "cong-nghe": [
+    ["vnexpress", "/vnexpress/rss/so-hoa.rss"],
+    ["tuoitre", "/tuoitre/rss/nhip-song-so.rss"],
+    ["thanhnien", "/thanhnien/rss/cong-nghe-game.rss"],
+  ]
+}
+
 function List() {
   const listRef = useRef<VariableSizeList>(null);
   const { bookmarks } = useContext(BookmarksContext);
@@ -64,19 +170,19 @@ function List() {
   const [ params ] = useSearchParams();
   const url = params.get('url');
   if (!tag) {
-    navigate("/news/tin-moi-nhat");
+    navigate("/doc-bao/thoi-su");
   }
-  debugger; //eslint-disable-line
   const { data, isLoading } = useQuery({
     queryKey: ["stories", tag],
     queryFn: async () => {
       if (!tag) return [];
       if (tag === "bookmarked") return Promise.resolve(bookmarks);
-      const items = await parseRSS("/vnexpress/rss/tin-moi-nhat.rss");
-      return items;
+      return Promise.all(feeds[tag].map(async ([site, feed]) => parseRSS(site, feed))).then(values => values.flat()); // Flatten array
     },
     refetchOnWindowFocus: false,
   });
+
+  console.log({ data });
 
   function ItemRenderer({
     style,
@@ -98,16 +204,23 @@ function List() {
   }
 
   const close = useCallback(() => {
-    navigate(`/news/${tag}`);
+    navigate(`/doc-bao/${tag}`);
   }, [navigate, tag]);
 
   return (
     <>
       <header>
         <nav>
-          <NavLink to="/news/tin-moi-nhat">Tin moi nhat</NavLink>
-          <NavLink to="/news/the-thao">The thao</NavLink>
-          <NavLink to="/news/bookmarked">Bookmarked</NavLink>
+          <NavLink to="/doc-bao/thoi-su">Thời sự</NavLink>
+          <NavLink to="/doc-bao/the-gioi">Thế giới</NavLink>
+          <NavLink to="/doc-bao/kinh-te">Kinh tế</NavLink>
+          <NavLink to="/doc-bao/giao-duc">Giáo dục</NavLink>
+          <NavLink to="/doc-bao/phap-luat">Pháp luật</NavLink>
+          <NavLink to="/doc-bao/doi-song">Đời sống</NavLink>
+          <NavLink to="/doc-bao/cong-nghe">Công nghệ</NavLink>
+          <NavLink to="/doc-bao/giai-tri">Giải trí</NavLink>
+          <NavLink to="/doc-bao/goc-nhin">Góc nhìn</NavLink>
+          <NavLink to="/doc-bao/tam-su">Tâm sự</NavLink>
         </nav>
       </header>
       {isLoading && (

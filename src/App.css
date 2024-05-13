@@ -110,12 +110,16 @@ a:visited {
   overflow: auto;
 }
 
-.article .page ul {
+.article .page ul,
+.article div[data-react],
+.article div[data-popupreact]
+{
   display: none;
 }
 
 .article img,
-.article figcaption {
+.article figcaption,
+.article figure {
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;

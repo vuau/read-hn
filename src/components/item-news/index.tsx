@@ -6,6 +6,7 @@ interface RSSItem {
   title: string;
   url: string;
   id: string;
+  site: string,
 }
 
 type TListProps = {
@@ -43,8 +44,11 @@ function ListItem({
   if (data) {
     return (
       <div ref={ref} style={combinedStyle} className="item">
-          <Link to={`/news/${tag}?url=${data.url}`}>
+          <Link to={`/doc-bao/${tag}?url=${data.url}`}>
             {data.title}
+            <span className="comment-count">
+              { data.site }
+            </span>
           </Link>
       </div>
     );
