@@ -110,6 +110,15 @@ a:visited {
   overflow: auto;
 }
 
+.article img,
+.article figcaption {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+}
+
 .article q {
   border: 0;
   margin: 0;
@@ -182,3 +191,6 @@ a:visited {
     position: relative;
 }
 
+ul[data-campaign] {
+    display: none;
+}
