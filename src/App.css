@@ -15,7 +15,7 @@ nav a {
 }
 
 nav a.active {
-  border-top: 5px solid var(--border);
+  border-top: 5px solid var(--focus);
 }
 
 body {
@@ -94,8 +94,8 @@ a:visited {
   background: var(--background-body) !important;
 }
 
-.article-wrap {
-  padding-top: 20px;
+.article-wrap h1 {
+  margin-top: 0;
 }
 
 .article {
